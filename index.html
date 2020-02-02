@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input</title>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@4.7.4/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core@4.7.4/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core@4.7.4/css/ionic.bundle.css" />
+  <style>
+    :root {
+      --ion-safe-area-top: 20px;
+      --ion-safe-area-bottom: 22px;
+    }
+  </style>
+  <script src="/home/dell/tp1/script.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header translucent>
+      <ion-toolbar color="dark">
+        <ion-title align="center">Manage your employees</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content fullscreen >
+      <form onsubmit="processForm(event)">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item>
+            <ion-label position="floating"> name <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input required type="text" oninput="handleNameValue(event)" id="name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">age <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input required type="number" oninput="handleAgeValue(event)" id="age"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">salary <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input required type="number" oninput="handleSalaryValue(event)" id="salaire"></ion-input>
+          </ion-item>
+
+          <ion-text>totale number of employyes :</ion-text>
+          <ion-text id="numb"></ion-text> <br><br>
+          <ion-text>totale salary :</ion-text>
+          <ion-text id="ts"></ion-text> <br><br>
+
+          <div class="ion-padding">
+            <ion-button expand="block" type="submit" class="ion-no-margin">Create account</ion-button>
+          </div>
+      </form>
+    </ion-content>
+    <ion-alert-controller></ion-alert-controller>
+    <div padding>
+      <ion-grid>
+        <ion-card>
+          <ion-card-content>
+
+            <ul id="emplist">
+              <ion-row>
+                <ion-col id="colname"> </ion-col>
+                <ion-col id="agecol"> </ion-col>
+                <ion-col id="salcol"> </ion-col>
+              </ion-row>
+            </ul>
+          </ion-card-content>
+        </ion-card>
+      </ion-grid>
+    </div>
+
+
+
+
+  </ion-app>
+
+  <script>
+    const controller = document.querySelector('ion-alert-controller');
+    sumSalaire = 0;
+    nbemployee = 0;
+    let name;
+    let salaire;
+    let age;
+    function processForm(event) {
+      event.preventDefault();
+      sumSalaire = sumSalaire + parseInt(salaire);
+      nbemployee = nbemployee + 1;
+      controller.create({
+        header: 'Employee added',
+        message: `Employee information: <b>${name} ${age} ${salaire}</b>`,
+        buttons: [{
+          text: 'OK'
+        }]
+      }).then(alert => alert.present());
+      var text = document.createTextNode(name)
+      var newitem = document.createElement("p")
+      newitem.appendChild(text)
+      document.getElementById("colname").appendChild(newitem)
+
+      var text1 = document.createTextNode(age)
+      var newitem1 = document.createElement("p")
+      newitem1.appendChild(text1)
+      document.getElementById("agecol").appendChild(newitem1)
+
+      var text2 = document.createTextNode(salaire)
+      var newitem2 = document.createElement("p")
+      newitem2.appendChild(text2)
+      document.getElementById("salcol").appendChild(newitem2)
+
+      document.getElementById("ts").innerHTML = sumSalaire
+
+      document.getElementById("numb").innerHTML = nbemployee
+
+      document.getElementById("option").innerHTML = " <div class='item-note' item-end>  <ion-icon name='create'></ion-icon> </button>"
+
+
+
+
+
+    }
+
+    function handleNameValue(event) {
+      name = event.target.value;
+    }
+    function handleAgeValue(event) {
+      age = event.target.value;
+    }
+    function handleSalaryValue(event) {
+      salaire = event.target.value;
+    }
+
+  </script>
+</body>
+
+</html>
